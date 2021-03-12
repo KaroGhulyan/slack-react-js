@@ -4,12 +4,21 @@ import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import SearchIcon from "@material-ui/icons/Search";
 import React from "react";
 import styled from "styled-components";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../firebase";
 
 function Header() {
+  const [user] = useAuthState(auth);
   return (
     <HeaderContainer>
       <HeaderLeft>
-        <HeaderAvatar />
+        <HeaderAvatar
+          onClick={() => {
+            auth.signOut();
+          }}
+          src={user?.photoURL}
+          alt={user?.displayName}
+        />
         <AccessTimeIcon />
       </HeaderLeft>
       <HeaderSearch>
